@@ -1,30 +1,23 @@
 <script setup>
 import Card from '@/components/Card.vue';
-import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { useProductsStore } from '@/stores/products';
+import { onMounted } from 'vue';
 
-const products = ref(null);
-const requestError = ref(null);
+const productsStore = useProductsStore();
 
 onMounted(async () => {
-    try {
-        const response = await axios.get('http://localhost:5239/api/picture');
-        products.value = response.data;
-    } catch (error) {
-        console.error("При попытке получить данных произошла ошибка: " + error.message);
-        requestError.value = "При попытке получить данных произошла ошибка: " + error.message;
-    }
+    if(!productsStore.products) await productsStore.getAll(); 
 });
 
 </script>
 
 <template>
     <main class="container mt-5 mb-5">
-        <div v-if="products">
-            <div v-if="products.length > 0">
+        <div v-if="productsStore.products">
+            <div v-if="productsStore.products.length > 0">
                 <h2 class="title">Репродукции</h2>
                 <div class="row mt-4 mb-4">
-                    <div class="mt-3 col-12 col-md-6 col-lg-4" v-for="(item, index) in products" :key="index">
+                    <div class="mt-3 col-12 col-md-6 col-lg-4" v-for="(item, index) in productsStore.products" :key="index">
                         <Card :product="item" />
                     </div>
                 </div>
@@ -36,7 +29,7 @@ onMounted(async () => {
                 <h2>Список товаров пока пусто</h2>
             </div>
         </div>
-        <div v-else-if="!products && !requestError" class="d-flex justify-content-center">
+        <div v-else-if="!productsStore.products && !productsStore.reqError" class="d-flex justify-content-center">
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>

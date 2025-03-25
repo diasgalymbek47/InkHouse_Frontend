@@ -1,27 +1,31 @@
 <script setup>
 import BasketCard from '@/components/BasketCard.vue';
+import { useBasketStore } from '@/stores/basket';
 import { RouterLink } from 'vue-router';
+
+const basketStore = useBasketStore();
+basketStore.calculateTotalSum();
+
+const cancelOrder = () => {
+    basketStore.products = [];
+    basketStore.calculateTotalSum();
+}
 </script>
 
 <template>
     <main class="container mt-5 mb-5">
-        <div class="products">
+        <div v-if="basketStore.products.length > 0" class="products">
             <h2 class="mb-3">Товары</h2>
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
+            <BasketCard v-for="(item, index) in basketStore.products" :key="index" :product="item" />
             <div class="total_sum">
-                <b>Общая сумма: </b>0тг
+                <b>Общая сумма: </b> {{ basketStore.totalSum }} тг.
             </div>
             <div class="basket_actions d-flex gap-3">
                 <button class="place">Оформить заказ</button>
-                <button class="cancel">Отменить заказ</button>
+                <button @click="cancelOrder" class="cancel">Отменить заказ</button>
             </div>
         </div>
-        <div class="empty d-flex flex-column align-items-center">
+        <div v-else class="empty d-flex flex-column align-items-center">
             <div class="img_box">
                 <img src="@/assets/images/free-icon-cart-13539700.png" alt="empty">
             </div>
@@ -57,15 +61,11 @@ import { RouterLink } from 'vue-router';
     }
 }
 
-.products {
-    display: none;
-}
-
 .img_box {
     width: 320px;
     height: 320px;
 
-    & > img {
+    &>img {
         width: 100%;
         height: 100%;
         object-fit: contain;

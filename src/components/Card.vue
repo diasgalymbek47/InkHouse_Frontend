@@ -1,7 +1,26 @@
 <script setup>
-defineProps({
+import { useBasketStore } from '@/stores/basket';
+import { ref } from 'vue';
+
+const props = defineProps({
     product: Object
 });
+
+const isSelected = ref(false);
+const basketStore = useBasketStore();
+
+if (basketStore.products.some(p => p.id === props.product.id)) {
+    isSelected.value = true;
+}
+
+const addToBasket = () => {
+    isSelected.value = !isSelected.value;
+    if (isSelected.value) {
+        basketStore.products.push(props.product);
+    } else {
+        basketStore.products = basketStore.products.filter(p => p.id !== props.product.id);   
+    }
+}
 </script>
 
 <template>
@@ -14,7 +33,9 @@ defineProps({
             <span class="card_name">{{ product.name }}</span>
             <span class="card_params">{{ product.props }}</span>
             <span class="card_price">{{ product.price }} тг.</span>
-            <button class="card_btn">В корзину</button>
+            <button @click="addToBasket" :class="isSelected ? 'card_btn selected' : 'card_btn'">
+                {{ isSelected ? 'Добавлено' : 'В корзину' }}
+            </button>
         </div>
     </div>
 </template>
@@ -71,5 +92,10 @@ defineProps({
     color: #598D66;
     border: 1px solid #598D66;
     background-color: transparent;
+
+    &.selected {
+        background-color: #598D66;
+        color: #fff;
+    }
 }
 </style>
