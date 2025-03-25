@@ -37,7 +37,7 @@ onMounted(async () => {
         <div v-else>
             <div class="alert alert-danger d-flex align-items-center gap-3" role="alert">
                 <img width="80" height="80" src="@/assets/images/free-icon-error-6533558.png" alt="errorIcon">
-                {{ requestError }}
+                {{ productsStore.reqError }}
             </div>
         </div>
     </main>
