@@ -40,6 +40,7 @@ const removeInBasket = () => {
     width: 80px;
     height: 80px;
     background-color: #333;
+    border-radius: 10px;
 
     &>img {
         width: 100%;

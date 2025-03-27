@@ -23,6 +23,11 @@ const router = createRouter({
       name: 'Basket',
       component: () => import('@/views/Basket.vue'),
     },
+    {
+      path: '/auth',
+      name: 'Auth',
+      component: () => import('@/views/Auth.vue'),
+    },
   ],
 })
 
