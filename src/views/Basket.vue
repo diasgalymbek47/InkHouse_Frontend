@@ -6,10 +6,27 @@ import { RouterLink } from 'vue-router';
 const basketStore = useBasketStore();
 basketStore.calculateTotalSum();
 
-const cancelOrder = () => {
-    basketStore.products = [];
-    basketStore.calculateTotalSum();
+const getUser = () => {
+    const storeUser = localStorage.getItem('user');
+    if (storeUser) {
+        user = JSON.parse(localStorage.getItem('user'));
+        return user;
+    } else {
+        alert("Сперва нужно авторизоваться!");
+    }
 }
+
+const cancelOrder = () => {
+    basketStore.clearBasket();
+}
+
+const placeOrder = () => {
+    const user = getUser();
+    if (!user) return;
+    
+    alert("Заказ сделан!");
+    basketStore.clearBasket();
+};
 </script>
 
 <template>
@@ -21,7 +38,7 @@ const cancelOrder = () => {
                 <b>Общая сумма: </b> {{ basketStore.totalSum }} тг.
             </div>
             <div class="basket_actions d-flex gap-3">
-                <button class="place">Оформить заказ</button>
+                <button @click="placeOrder" class="order">Оформить заказ</button>
                 <button @click="cancelOrder" class="cancel">Отменить заказ</button>
             </div>
         </div>
@@ -49,7 +66,7 @@ const cancelOrder = () => {
         border: 1px solid #598D66;
         background-color: transparent;
 
-        &.place {
+        &.order {
             border-color: green;
             color: green;
         }

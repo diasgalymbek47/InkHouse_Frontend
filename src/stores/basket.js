@@ -9,5 +9,9 @@ export const useBasketStore = defineStore('basket', {
     calculateTotalSum() {
       this.totalSum = this.products.reduce((t, p) => t + p.price, 0);
     },
+    clearBasket() {
+      this.products = [];
+      this.calculateTotalSum();
+    }
   },
 })
