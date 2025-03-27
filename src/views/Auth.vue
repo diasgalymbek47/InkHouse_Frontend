@@ -40,13 +40,15 @@ const auth = async (user) => {
 const register = async (user) => {
     await axios.post('http://localhost:5239/api/user/register', user)
         .then(_ => {
-            repeatPassword.value = "";
             isAuth.value = true;
         })
         .catch(error => {
             postData.value.login = '';
             postData.value.password = '';
             alert(error.response.data.details);
+        })
+        .finally(_ => {
+            repeatPassword.value = "";
         });
 }
 </script>
