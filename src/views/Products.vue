@@ -1,23 +1,40 @@
 <script setup>
 import Card from '@/components/Card.vue';
 import { useProductsStore } from '@/stores/products';
-import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { ref, watch } from 'vue';
 
+const route = useRoute();
 const productsStore = useProductsStore();
+const getProductsBtn = ref(false);
 
-onMounted(async () => {
-    if(!productsStore.products) await productsStore.getAll(); 
-});
+watch(route, async () => {
+    await productsStore.getAll();
+
+    if (!productsStore.products && productsStore.reqError) {
+        getProductsBtn.value = true;
+    }
+}, { immediate: true });
+
+const getProducts = async () => {
+    getProductsBtn.value = false;
+    await productsStore.getAll();
+    if (!productsStore.products && productsStore.reqError) {
+        getProductsBtn.value = true;
+    }
+}
 
 </script>
 
 <template>
-    <main class="container mt-5 mb-5">
+    <main class="container pt-4 pb-4">
+        <button v-if="getProductsBtn" @click="getProducts" class="get_products_btn p-3 mb-3">Получить товары</button>
         <div v-if="productsStore.products">
             <div v-if="productsStore.products.length > 0">
                 <h2 class="title">Репродукции</h2>
                 <div class="row mt-4 mb-4">
-                    <div class="mt-3 col-12 col-md-6 col-lg-4" v-for="(item, index) in productsStore.products" :key="index">
+                    <div class="mt-3 col-12 col-md-6 col-lg-4" v-for="(item, index) in productsStore.products"
+                        :key="index">
                         <Card :product="item" />
                     </div>
                 </div>
@@ -53,6 +70,18 @@ onMounted(async () => {
         height: 100%;
         object-fit: contain;
         object-position: center;
+    }
+}
+
+.get_products_btn {
+    width: 100%;
+    font-weight: 500;
+    border: 1px solid #000;
+    border-radius: 6px;
+    background-color: transparent;
+
+    &:hover {
+        background-color: aliceblue;
     }
 }
 </style>

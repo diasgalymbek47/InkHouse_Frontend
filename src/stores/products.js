@@ -12,8 +12,10 @@ export const useProductsStore = defineStore('products', {
       try {
         const response = await axios.get(this.url);
         this.products = response.data;
+        this.reqError = null;
         console.log('Продукты получены!');
       } catch (error) {
+        this.products = null;
         console.error('При попытке получить данных произошла ошибка: ' + error.message);
         this.reqError = 'При попытке получить данных произошла ошибка: ' + error.message;
       }
