@@ -33,7 +33,7 @@ const auth = async (user) => {
         .catch(error => {
             postData.value.login = '';
             postData.value.password = '';
-            alert(error.message);
+            alert(error.response.data.details);
         });
 }
 
