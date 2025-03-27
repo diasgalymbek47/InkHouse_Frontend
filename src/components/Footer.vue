@@ -12,7 +12,7 @@ import { RouterLink } from 'vue-router';
                     Ink House
                 </h3>
             </RouterLink>
-            <a class="text-decoration-none" target="_blank" href="https://github.com/">by Galymbek Dias</a>
+            <a class="footer_git text-decoration-none" target="_blank" href="https://github.com/">by Galymbek Dias</a>
         </div>
     </footer>
 </template>
@@ -27,5 +27,11 @@ import { RouterLink } from 'vue-router';
     font-weight: normal;
     color: #598D66;
     font-size: 16px;
+}
+
+.footer_git {
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
 }
 </style>
