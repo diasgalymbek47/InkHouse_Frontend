@@ -5,9 +5,9 @@ import { RouterLink } from 'vue-router';
 
 <template>
     <main class="container">
-        <div class="d-flex gap-3">
-            <img src="@/assets/images/MainImage.png" alt="MainImage">
-            <div class="content d-flex flex-column justify-content-center">
+        <div class="d-flex gap-3 flex-wrap flex-lg-nowrap">
+            <img class="main_image" src="@/assets/images/MainImage.png" alt="MainImage">
+            <div class="content d-flex flex-column justify-content-center mb-5 mb-lg-0">
                 <h2 class="content_title">
                     Реплики картин от <span>Ink House</span>
                 </h2>
@@ -44,11 +44,21 @@ import { RouterLink } from 'vue-router';
 </template>
 
 <style scoped>
+.main_image{
+    @media (max-width: 768px) {
+        width: 100%;
+    }    
+}
+
 .content_title {
     font-size: 60px;
 
     &>span {
         color: #598D66;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 32px;
     }
 }
 
@@ -92,6 +102,12 @@ import { RouterLink } from 'vue-router';
     &>span {
         display: block;
         margin: 30px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .about_title {
+        font-size: 24px;
     }
 }
 

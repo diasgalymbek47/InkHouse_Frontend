@@ -14,7 +14,7 @@ const removeInBasket = () => {
 </script>
 
 <template>
-    <div class="d-flex align-items-center gap-4 mt-3 mb-3">
+    <div class="item d-flex align-items-center gap-4 mt-sm-3 mb-sm-3 mt-5 mb-5 flex-wrap flex-sm-nowrap">
         <div class="card_img">
             <img :src="product.urlImage" alt="Picture">
         </div>
@@ -36,6 +36,14 @@ const removeInBasket = () => {
 </template>
 
 <style scoped>
+.item {
+    @media (max-width: 576px) {
+        padding: 10px;
+        background-color: #e7e7e7;
+        border-radius: 5px;
+    }
+}
+
 .card_img {
     width: 80px;
     height: 80px;
@@ -58,5 +66,11 @@ const removeInBasket = () => {
     color: #ec6460;
     border: 1px solid #ec6460;
     background-color: transparent;
+}
+
+.card_info {
+    @media (max-width: 576px) {
+        width: 100%;
+    }
 }
 </style>

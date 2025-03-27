@@ -1,9 +1,9 @@
 <script setup></script>
 
 <template>
-    <main class="container d-flex gap-5 mt-5 mb-5">
+    <main class="container d-flex gap-5 mt-5 mb-5 flex-wrap flex-lg-nowrap">
         <div class="picture">
-            <img src="@/assets/images/AboutMainImage.png" alt="MainPicture">
+            <img class="about_image" src="@/assets/images/AboutMainImage.png" alt="MainPicture">
         </div>
         <div class="content d-flex flex-column justify-content-center">
             <h2>Наша команда</h2>
@@ -21,4 +21,10 @@
     </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.about_image {
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+}
+</style>
